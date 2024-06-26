@@ -1,7 +1,4 @@
 'use strict';
-
-
-
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
@@ -82,9 +79,9 @@ const filterFunc = function (selectedValue) {
 
   for (let i = 0; i < filterItems.length; i++) {
 
-    if (selectedValue === "all") {
+    if (selectedValue.toLowerCase() === "all") {
       filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
+    } else if (selectedValue.toLowerCase() === filterItems[i].dataset.category.toLowerCase()) {
       filterItems[i].classList.add("active");
     } else {
       filterItems[i].classList.remove("active");
@@ -120,13 +117,25 @@ const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
-const namee = document.getElementsByClassName("form-input")[0];
-console.log(namee);
+// formData.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+  // db.collection("formData").add(formData)
+  // .then(() => {
+  //   console.log("Document successfully written!");
+  // })
+  // .catch((error) => {
+  //   console.error("Error writing document: ", error);
+  // });
+
+
+
+// const namee = document.getElementsByName("fullname");
+
 
 // add event to all form input field
 // for (let i = 0; i < formInputs.length; i++) {
 //   formInputs[i].addEventListener("input", function () {
-
+//      console.log(formInputs[i].childNodes);
 //     // check form validation
 //     if (form.checkValidity()) {
 //       formBtn.removeAttribute("disabled");
@@ -160,5 +169,3 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
-
-console.log();

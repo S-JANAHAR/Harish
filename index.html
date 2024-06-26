@@ -6,6 +6,56 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multipage Portfolio</title>
+  <script type="module" >
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBpWgfIKYZC-a9oG2DQJNxUAr1cODTu3VM",
+      authDomain: "portfolio-c4e46.firebaseapp.com",
+      projectId: "portfolio-c4e46",
+      storageBucket: "portfolio-c4e46.appspot.com",
+      messagingSenderId: "181998743246",
+      appId: "1:181998743246:web:404bc75a6f0539f4a76a9f",
+      measurementId: "G-TBCH6GM3T3"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    // Initialize Firestore
+    const db = getFirestore(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const formInputs = document.querySelectorAll("[data-form-input]");
+      const formBtn = document.querySelector("[data-form-btn]");
+
+      async function call() {
+        console.log("Called");
+
+        const formData = {};
+        formInputs.forEach((i) => {
+          formData[i.name] = i.value; // Assumes each input has a unique name attribute
+        });
+
+        // Add a timestamp field to the formData object
+        formData.timestamp = serverTimestamp();
+
+        try {
+          // Save data to Firestore
+          await addDoc(collection(db, "formData"), formData);
+          console.log("Document successfully written!");
+        } catch (error) {
+          console.error("Error writing document: ", error);
+        }
+      }
+
+      formBtn.addEventListener("click", call);
+    });
+  </script>
 
   <!--
     - favicon
@@ -22,6 +72,10 @@
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Add Firebase products that you want to use -->
+
+
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -651,7 +705,7 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="Certifications">
+            <li class="project-item  active" data-filter-item data-category="Projects">
               <a href="https://www.figma.com/design/5i5rBlUOYvFtK9Q3BkhQev/Masal-Dosa?node-id=0-1&t=DY9o8zXzEenmHQpp-1">
 
                 <figure class="project-img">
@@ -741,17 +795,17 @@
 
           <h3 class="h3 form-title">Contact Form</h3>
 
-          <form action="#" class="form" data-form>
+          <form  class="form" data-form>
 
             <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+              <input type="text" name="fullname" class="form-input name" placeholder="Full name"   required data-form-input>
 
               <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
             </div>
 
             <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
 
-            <button class="form-btn" type="submit"  data-form-btn>
+            <button class="form-btn" type="button"   data-form-btn>
               <ion-icon name="paper-plane"></ion-icon>
               <span>Send Message</span>
             </button>
@@ -768,13 +822,12 @@
 
 
 
-
-
-
   <!--
     - custom js link
   -->
-  <script src="assets/script.js"></script>
+  <script src="assets/script.js">
+    
+  </script>
 
   <!--
     - ionicon link
